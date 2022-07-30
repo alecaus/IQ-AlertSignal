@@ -34,3 +34,7 @@ def IQ_Conectar():
 
 if IQ_Conectar() == False:
     sys.exit()
+
+while True:
+    time.sleep(5)
+    print("..")
