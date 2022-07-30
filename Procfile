@@ -1,1 +1,1 @@
-worker: python IQ-AlertSignal.py
+worker: python IQ-AlertSignal.py  

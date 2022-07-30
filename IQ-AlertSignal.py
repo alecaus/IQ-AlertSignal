@@ -5,9 +5,6 @@ from datetime import datetime
 import socket
 import threading
 import time
-from tkinter import *
-from tkinter import messagebox
-from tkinter import ttk
 import sys
 
 
@@ -27,7 +24,6 @@ def IQ_Conectar():
 
     if check == False:
         print("- Falha ao conectar-se, razao: " + reason)
-        messagebox.showerror(title="Falha ao fazer Login", message=reason)
         return False
 
     print("Conectado com sucesso!")
