@@ -1,1 +1,1 @@
-web: gunicord IQ-AlertSignal:server
+worker: python IQ-AlertSignal.py
