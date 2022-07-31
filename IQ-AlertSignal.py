@@ -13,7 +13,7 @@ import requests
 def IQ_Conectar():
     
     global API
-    conta_email = "gamesteryet@hotmail.com"
+    conta_email = "alexandrecaus@hotmail.com"
     conta_senha = "Aa457711@"
     balanco = "REAL"
 
@@ -116,12 +116,12 @@ assets_care = []
 
 while True:
 
-    time.sleep(5)
-    #time.sleep(60*15) # 15 minutos
+    #time.sleep(5)
     
     Assets_Refresh_Openeds()
 
     if AssetsCare_Update() == False:
+        time.sleep(60*10) # 10 minutos
         continue
 
     print("")
@@ -138,3 +138,5 @@ while True:
 
 
         assets_care[i]["on"] = status
+
+    time.sleep(60*10) # 10 minutos
