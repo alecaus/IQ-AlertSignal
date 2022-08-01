@@ -139,4 +139,4 @@ while True:
 
         assets_care[i]["on"] = status
 
-    time.sleep(60*10) # 10 minutos
+    time.sleep(60*5) # 5 minutos
