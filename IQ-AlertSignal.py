@@ -41,6 +41,7 @@ if IQ_Conectar() == False:
 def Assets_Refresh_Openeds():
     global assets_opened
     assets_opened=API.get_all_open_time()
+    print(assets_opened)
 
 def AssetsCare_CheckAsset(asset_name, asset_class):
     for i in range(0, len(assets_care)):
@@ -129,11 +130,13 @@ while True:
     for i in range(0, len(assets_care)):
         status = assets_opened[assets_care[i]["class"]][assets_care[i]["name"]]["open"]
         print("> Verificando ativo | "+assets_care[i]["name"]+" / " + assets_care[i]["class"])
+        print("> Status: ", status)
 
         if assets_care[i]["on"] == False and status == True:
             # Envia notificação
             print("> Enviando notificação..")
             Telegram_Alertar(assets_care[i]["name"]+"-"+assets_care[i]["class"]+" | Disponível!")
+            
             assets_care[i]["on"] = True    
 
 
