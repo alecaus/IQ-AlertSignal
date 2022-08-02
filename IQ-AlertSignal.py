@@ -41,7 +41,7 @@ if IQ_Conectar() == False:
 def Assets_Refresh_Openeds():
     global assets_opened
     assets_opened=API.get_all_open_time()
-    print(assets_opened)
+    #print(assets_opened)
 
 def AssetsCare_CheckAsset(asset_name, asset_class):
     for i in range(0, len(assets_care)):
@@ -140,6 +140,7 @@ while True:
             assets_care[i]["on"] = True    
 
 
-        assets_care[i]["on"] = status
+        if status != True:
+            assets_care[i]["on"] = False
 
     time.sleep(60*5) # 5 minutos

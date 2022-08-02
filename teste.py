@@ -1,2 +1,2 @@
-if "teste" == "teste":
-    print("IGUAL!")
+if {} == True:
+    print("VERDADEIRO!!!")
