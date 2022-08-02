@@ -122,7 +122,7 @@ while True:
     Assets_Refresh_Openeds()
 
     if AssetsCare_Update() == False:
-        time.sleep(60*5) # 5 minutos
+        time.sleep(60*2) # 5 minutos
         continue
 
     print("")
@@ -143,4 +143,4 @@ while True:
         if status != True:
             assets_care[i]["on"] = False
 
-    time.sleep(60*5) # 5 minutos
+    time.sleep(60*2) # 5 minutos
