@@ -125,7 +125,7 @@ while True:
         time.sleep(60*2) # 5 minutos
         continue
 
-    print("")
+    
 
     for i in range(0, len(assets_care)):
         status = assets_opened[assets_care[i]["class"]][assets_care[i]["name"]]["open"]
