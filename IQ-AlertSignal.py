@@ -34,12 +34,14 @@ def IQ_Conectar():
 
     return True
 
-if IQ_Conectar() == False:
-    sys.exit()
-
 
 def Assets_Refresh_Openeds():
     global assets_opened
+    if API.check_connect() == False:
+        print("Não está conectado")
+    else:
+        print("Está conectado")
+
     assets_opened=API.get_all_open_time()
     #print(assets_opened)
 
@@ -112,7 +114,11 @@ def Telegram_Alertar(mensagem):
     r = requests.get(url + "/sendMessage", params=params)
     print("> Notificação Telegram Enviada")
     print("- " + mensagem)
-        
+
+
+if IQ_Conectar() == False:
+    sys.exit()
+
 assets_care = []
 
 while True:
