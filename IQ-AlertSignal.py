@@ -39,6 +39,10 @@ def Assets_Refresh_Openeds():
     global assets_opened
     if API.check_connect() == False:
         print("Não está conectado")
+        if IQ_Conectar() == False:
+             print("Falha em realizar nova conexão..")
+        else:
+            Telegram_Alertar("Reconectado com sucesso!")
     else:
         print("Está conectado")
 
@@ -119,7 +123,28 @@ def Telegram_Alertar(mensagem):
 if IQ_Conectar() == False:
     sys.exit()
 
+
+def payout(par, tipo, timeframe = 1):
+	if tipo == 'turbo':
+		a = API.get_all_profit()
+        
+		return int(100 * a[par]['turbo'])
+		
+	elif tipo == 'digital':
+	
+		API.subscribe_strike_list(par, timeframe)
+		while True:
+			d = API.get_digital_current_profit(par, timeframe)
+			if d != False:
+				d = int(d)
+				break
+			time.sleep(1)
+		API.unsubscribe_strike_list(par, timeframe)
+		return d
+
 assets_care = []
+
+
 
 while True:
 
@@ -137,12 +162,17 @@ while True:
         status = assets_opened[assets_care[i]["class"]][assets_care[i]["name"]]["open"]
         print("> Verificando ativo | "+assets_care[i]["name"]+" / " + assets_care[i]["class"])
         print("> Status: ", status)
+       # print(payout(str(assets_care[i]["name"]),str(assets_care[i]["class"])))
 
         if assets_care[i]["on"] == False and status == True:
             # Envia notificação
             print("> Enviando notificação..")
             Telegram_Alertar(assets_care[i]["name"]+"-"+assets_care[i]["class"]+" | Disponível!")
-            
+            payouts = payout(assets_care[i]["name"],assets_care[i]["class"])
+
+            if payouts >= 92:
+                 Telegram_Alertar(assets_care[i]["name"]+"-"+assets_care[i]["class"]+" | Payout de " + str(payouts))
+
             assets_care[i]["on"] = True    
 
 
