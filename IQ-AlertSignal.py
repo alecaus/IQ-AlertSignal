@@ -177,10 +177,10 @@ while True:
                
                meus_ativos["digital"][key] = payout
                
-               print(key + "/" + "Digital | Payout de " + str(payout) + "%")
+               Telegram_Alertar(key + "/" + "Digital | Payout de " + str(payout) + "%")
           else:
                meus_ativos["digital"][key] = payout
-               print(key + "/" + "Digital | Payout de " + str(payout) + "%")
+               Telegram_Alertar(key + "/" + "Digital | Payout de " + str(payout) + "%")
 
 # 
 
@@ -202,10 +202,10 @@ while True:
                
                meus_ativos["turbo"][key] = payout
                
-               print(key + "/" + "Turbo | Payout de " + str(payout) + "%")
+               Telegram_Alertar(key + "/" + "Turbo | Payout de " + str(payout) + "%")
           else:
                meus_ativos["turbo"][key] = payout
-               print(key + "/" + "Turbo | Payout de " + str(payout) + "%")
+               Telegram_Alertar(key + "/" + "Turbo | Payout de " + str(payout) + "%")
                
 # 
 
