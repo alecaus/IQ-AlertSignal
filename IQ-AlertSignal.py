@@ -42,7 +42,8 @@ def Assets_Refresh_Openeds():
         if IQ_Conectar() == False:
              print("Falha em realizar nova conexão..")
         else:
-            Telegram_Alertar("Reconectado com sucesso!")
+            print("Reconectado com sucesso!")
+            #elegram_Alertar("Reconectado com sucesso!")
     else:
         print("Está conectado")
 
@@ -124,7 +125,7 @@ if IQ_Conectar() == False:
     sys.exit()
 
 
-def payout(par, tipo, timeframe = 1):
+def ObterPayout(par, tipo, timeframe = 1):
 	if tipo == 'turbo':
 		a = API.get_all_profit()
         
@@ -144,7 +145,9 @@ def payout(par, tipo, timeframe = 1):
 
 assets_care = []
 
-
+meus_ativos = {}
+meus_ativos["digital"] = {}
+meus_ativos["turbo"] = {}
 
 while True:
 
@@ -153,15 +156,67 @@ while True:
     Assets_Refresh_Openeds()
 
     if AssetsCare_Update() == False:
-        time.sleep(60*2) # 5 minutos
+        time.sleep(60*2) # 2 minutos
         continue
 
-    
+    for key in assets_opened["digital"]:
+         #print(assets_opened["turbo"][i])
+          if assets_opened["digital"][key]["open"] == False:
+               continue
+        
+
+          payout = ObterPayout(key,"digital")
+          
+          if payout <= 90:
+            continue
+          
+          if key in meus_ativos["digital"]:
+               if payout <= meus_ativos["digital"][key]:
+                    meus_ativos["digital"][key] = payout
+                    continue
+               
+               meus_ativos["digital"][key] = payout
+               
+               print(key + "/" + "Digital | Payout de " + str(payout) + "%")
+          else:
+               meus_ativos["digital"][key] = payout
+               print(key + "/" + "Digital | Payout de " + str(payout) + "%")
+
+# 
+
+    for key in assets_opened["turbo"]:
+         #print(assets_opened["turbo"][i])
+          if assets_opened["turbo"][key]["open"] == False:
+               continue
+        
+
+          payout = ObterPayout(key,"turbo")
+          
+          if payout <= 90:
+            continue
+          
+          if key in meus_ativos["turbo"]:
+               if payout <= meus_ativos["turbo"][key]:
+                    meus_ativos["turbo"][key] = payout
+                    continue
+               
+               meus_ativos["turbo"][key] = payout
+               
+               print(key + "/" + "Turbo | Payout de " + str(payout) + "%")
+          else:
+               meus_ativos["turbo"][key] = payout
+               print(key + "/" + "Turbo | Payout de " + str(payout) + "%")
+               
+# 
+
+
+            #Telegram_Alertar(key + " / " + "Digital | Payout de " + str(payout))
+
 
     for i in range(0, len(assets_care)):
         status = assets_opened[assets_care[i]["class"]][assets_care[i]["name"]]["open"]
-        print("> Verificando ativo | "+assets_care[i]["name"]+" / " + assets_care[i]["class"])
-        print("> Status: ", status)
+        #print("> Verificando ativo | "+assets_care[i]["name"]+" / " + assets_care[i]["class"])
+        #print("> Status: ", status)
        # print(payout(str(assets_care[i]["name"]),str(assets_care[i]["class"])))
 
         if assets_care[i]["on"] == False and status == True:
@@ -170,8 +225,8 @@ while True:
             Telegram_Alertar(assets_care[i]["name"]+"-"+assets_care[i]["class"]+" | Disponível!")
             payouts = payout(assets_care[i]["name"],assets_care[i]["class"])
 
-            if payouts >= 92:
-                 Telegram_Alertar(assets_care[i]["name"]+"-"+assets_care[i]["class"]+" | Payout de " + str(payouts))
+         #   if payouts >= 92:
+         #        Telegram_Alertar(assets_care[i]["name"]+"-"+assets_care[i]["class"]+" | Payout de " + str(payouts))
 
             assets_care[i]["on"] = True    
 
@@ -179,4 +234,4 @@ while True:
         if status != True:
             assets_care[i]["on"] = False
 
-    time.sleep(60*2) # 5 minutos
+    time.sleep(60*2) # 2 minutos
